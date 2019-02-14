@@ -2,7 +2,9 @@
 namespace Eminiarts\NovaPermissions;
 
 use Laravel\Nova\Nova;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Events\ServingNova;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Eminiarts\NovaPermissions\Http\Middleware\Authorize;
@@ -14,9 +16,13 @@ class ToolServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Filesystem $filesystem)
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-permissions');
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_permission_tables.php.stub' => $this->getMigrationFileName($filesystem),
+        ], 'migrations');
 
         $this->app->booted(function () {
             $this->routes();
@@ -33,6 +39,23 @@ class ToolServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Returns existing migration file if found, else uses the current timestamp.
+     *
+     * @param  Filesystem $filesystem
+     * @return string
+     */
+    protected function getMigrationFileName(Filesystem $filesystem): string
+    {
+        $timestamp = date('Y_m_d_His');
+
+        return Collection::make($this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR)
+            ->flatMap(function ($path) use ($filesystem) {
+                return $filesystem->glob($path . '*_create_permission_tables.php');
+            })->push($this->app->databasePath() . "/migrations/{$timestamp}_create_permission_tables.php")
+            ->first();
     }
 
     /**
