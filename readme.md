@@ -213,7 +213,7 @@ namespace App\Nova;
 
 use Eminiarts\NovaPermissions\Nova\ResourceForUser;
 
-class Menuplan extends ResourceForUser 
+class Contact extends ResourceForUser 
 {
     //...
 }
