@@ -5,7 +5,6 @@ A Laravel Nova Tool that allows you to group your Permissions into Groups and at
 2. [Permissions with Groups](#permissions-with-groups)
     * [Detail View](#detail-view)
     * [Edit View](#edit-view)
-    * [Modify Permissions Migration](#modify-permissions-migration)
     * [Database Seeding](#database-seeding)
     * [Create a Model Policy](#create-a-model-policy)
     * [Super Admin](#super-admin)
@@ -24,13 +23,13 @@ You can install the package in to a Laravel app that uses [Nova](https://nova.la
 composer require eminiarts/nova-permissions
 ```
 
-Go through the [Installation](https://github.com/spatie/laravel-permission#installation) section in order to setup [laravel-permission](https://packagist.org/packages/spatie/laravel-permission).
+Publish the Migration with the following command:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Eminiarts\NovaPermissions\ToolServiceProvider" --tag="migrations"
 ```
 
-[Modify the Migration](#modify-permissions-migration) in order to use Groups.
+This migration has a `group` field in order to allow groups.
 
 Next up, you must register the tool with Nova. This is typically done in the `tools` method of the `NovaServiceProvider`.
 
@@ -76,35 +75,6 @@ A new menu item called **Permissions & Roles** will appear in your Nova app afte
 
 ![image](https://user-images.githubusercontent.com/3426944/50088682-0051db00-0204-11e9-8201-1ac4b57f0631.png)
 
-### Modify Permissions Migration
-
-When you have a lot of Permissions, it makes sense to group them. In order to use prouped Permissions, we have to modify the schema for Permissions. Make sure to run 
-
-`php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"` 
-
-to be able to modify the Permissions Schema like this:
-
-```php
-// in database/migrations/..._create_permissions_tables.php
-
-public function up()
-{
-    //...
-
-    Schema::create($tableNames['permissions'], function (Blueprint $table) {
-        $table->uuid('id')->index();
-        $table->primary('id');
-        $table->string('name');
-        $table->string('group'); // add this to Spatie's Permissions Migration
-        $table->string('guard_name');
-        $table->timestamps();
-    });
-    //...
-
-}
-```
-
-> Add `$table->string('group');` to the permissions table.
 
 The Checkboxes Field expects an array with **group, option, label**. If you want to show all Permissions on your Role Resource, you can use the following options:
 
