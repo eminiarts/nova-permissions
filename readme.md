@@ -31,6 +31,12 @@ php artisan vendor:publish --provider="Eminiarts\NovaPermissions\ToolServiceProv
 
 This migration has a `group` field in order to allow groups.
 
+Migrate the Database:
+
+```bash
+php artisan migrate
+```
+
 Next up, you must register the tool with Nova. This is typically done in the `tools` method of the `NovaServiceProvider`.
 
 ```php
@@ -101,7 +107,14 @@ public function fields()
 
 ### Database Seeding
 
-This is just an example on how you could seed your Database with Roles and Permissions. Create a new `RolesAndPermissionsSeeder.php` in `database/seeds`:
+Publish our Seeder with the following command:
+
+```
+php artisan vendor:publish --provider="Eminiarts\NovaPermissions\ToolServiceProvider" --tag="seeds"
+```
+
+
+This is just an example on how you could seed your Database with Roles and Permissions. Modify `RolesAndPermissionsSeeder.php` in `database/seeds`. List all your Models you want to have Permissions for in the `$collection` Array and change the email for the Super-Admin:
 
 ```php
 <?php
@@ -143,16 +156,20 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::create(['group' => $item, 'name' => 'forceDelete ' . $item]);
         });
 
-        // create a Super-Admin Role and assign all permissions to it
+        // Create a Super-Admin Role and assign all permissions to it
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());
 
         // Give User Super-Admin Role
-        $user = App\User::whereEmail('your@email.com')->first();
+        $user = App\User::whereEmail('your@email.com')->first(); // enter your email here 
         $user->assignRole('super-admin');
     }
 }
 ```
+
+Now you can seed the Database. Add `$this->call(RolesAndPermissionsSeeder::class);` to the `DatabaseSeeder`.
+
+> Note: If this doesn't work, run `composer dumpautoload` to autoload the Seeder.
 
 ### Create a Model Policy
 
