@@ -169,7 +169,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
 Now you can seed the Database. Add `$this->call(RolesAndPermissionsSeeder::class);` to the `DatabaseSeeder`.
 
-> Note: If this doesn't work, run `composer dumpautoload` to autoload the Seeder.
+> **Note**: If this doesn't work, run `composer dumpautoload` to autoload the Seeder.
 
 ### Create a Model Policy
 
@@ -194,6 +194,9 @@ class ContactPolicy extends Policy
 }
 ```
 It should now work as exptected. Just create a Role, modify its Permissions and the Policy should take care of the rest.
+
+> **Note**: Don't forget to add your Policy to your `$policies` in `App\Providers\AuthServiceProvider`.
+
 > **Note**: Only extend the Policy if you have created your Permissions according to our Seeding Example. Otherwise, make sure to have `view contacts, view own contacts, manage contacts, manage own contacts, restore contacts,  forceDelete contacts` as Permissions in your Table in order to extend our Policy.
 
 > `view own contacts` is superior to `view contacts` and allows the User to only view his own Contacts.
