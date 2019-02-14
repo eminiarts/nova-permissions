@@ -24,6 +24,10 @@ class ToolServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations/create_permission_tables.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
 
+        $this->publishes([
+            __DIR__ . '/../database/seeds/RolesAndPermissionsSeeder.php.stub' => $this->app->databasePath() . "/seeds/RolesAndPermissionsSeeder.php",
+        ], 'seeds');
+
         $this->app->booted(function () {
             $this->routes();
         });
