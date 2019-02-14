@@ -242,6 +242,8 @@ class Menuplan extends ResourceForUser
 }
 ```
 
+> **Note**: ResourceForUser assumes the Resource has a `user_id` column in the Database. If you are using another column, feel free to copy the contents of the Resource and modify it.
+
 ## Customization
 
 ### Use your own Resources
