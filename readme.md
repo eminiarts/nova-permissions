@@ -1,4 +1,6 @@
 # Laravel Nova Grouped Permissions
+[![Latest Version on Github](https://img.shields.io/packagist/v/eminiarts/nova-permissions.svg?style=flat)](https://packagist.org/packages/eminiarts/nova-permissions)
+
 A Laravel Nova Tool that allows you to group your Permissions into Groups and attach it to Users. It uses Spatie's laravel-permission. 
 
 We have a Migration, Seed, Policy and Resource ready for a good Authorization Experience.
