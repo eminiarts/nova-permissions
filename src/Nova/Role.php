@@ -1,5 +1,5 @@
 <?php
-namespace Eminiarts\NovaPermissions;
+namespace Eminiarts\NovaPermissions\Nova;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\Select;
-use Eminiarts\NovaPermissions\Role;
 use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\BelongsToMany;
+use Eminiarts\NovaPermissions\Checkboxes;
+use Eminiarts\NovaPermissions\Role as RoleModel;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
-class Permission extends Resource
+class Role extends Resource
 {
     /**
      * @var mixed
@@ -25,7 +25,7 @@ class Permission extends Resource
      *
      * @var string
      */
-    public static $model = SpatiePermission::class;
+    public static $model = RoleModel::class;
 
     /**
      * The columns that should be searched.
@@ -51,8 +51,7 @@ class Permission extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -87,19 +86,28 @@ class Permission extends Resource
             ,
             Text::make(__('Name'), 'name')
                 ->rules(['required', 'string', 'max:255'])
-                ->creationRules('unique:' . config('permission.table_names.permissions'))
-                ->updateRules('unique:' . config('permission.table_names.permissions') . ',name,{{resourceId}}'),
+                ->creationRules('unique:' . config('permission.table_names.roles'))
+                ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}')
 
-            Text::make(__('Group'), 'group'),
-
+            ,
             Select::make(__('Guard Name'), 'guard_name')
                 ->options($guardOptions->toArray())
-                ->rules(['required', Rule::in($guardOptions)]),
-
-            // DateTime::make(__('nova-permission-tool::permissions.created_at'), 'created_at')->exceptOnForms(),
-            // DateTime::make(__('nova-permission-tool::permissions.updated_at'), 'updated_at')->exceptOnForms(),
-
-            BelongsToMany::make(__('Roles'), 'roles', Role::class),
+                ->rules(['required', Rule::in($guardOptions)])
+                ->canSee(function ($request) {
+                    return $request->user()->isSuperAdmin();
+                })
+            ,
+            Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
+                return [
+                    'group'  => __(ucfirst($permission->group)),
+                    'option' => $permission->name,
+                    'label'  => __($permission->name),
+                ];
+            })->groupBy('group')->toArray())
+            ,
+            Text::make(__('Users'), function () {
+                return count($this->users);
+            })->exceptOnForms(),
             MorphToMany::make($userResource::label(), 'users', $userResource)->searchable(),
         ];
     }
@@ -115,14 +123,9 @@ class Permission extends Resource
         return [];
     }
 
-    public static function getModel()
-    {
-        //return app(PermissionRegistrar::class)->getPermissionClass();
-    }
-
     public static function label()
     {
-        return __('Permissions');
+        return __('Roles');
     }
 
     /**
@@ -138,6 +141,6 @@ class Permission extends Resource
 
     public static function singularLabel()
     {
-        return __('Permission');
+        return __('Role');
     }
 }
