@@ -83,29 +83,6 @@ A new menu item called **Permissions & Roles** will appear in your Nova app afte
 ![image](https://user-images.githubusercontent.com/3426944/50088682-0051db00-0204-11e9-8201-1ac4b57f0631.png)
 
 
-The Checkboxes Field expects an array with **group, option, label**. If you want to show all Permissions on your Role Resource, you can use the following options:
-
-```php
-// in App/Nova/Role;
-
-use Eminiarts\FieldCheckboxes\Checkboxes;
-
-public function fields()
-{
-    return [
-        // ...
-        Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
-                return [
-                    'group'  => __(ucfirst($permission->group)),
-                    'option' => $permission->name,
-                    'label'  => __($permission->name),
-                ];
-            })->groupBy('group')->toArray())
-        ,
-    ];
-}
-```
-
 ### Database Seeding
 
 Publish our Seeder with the following command:
