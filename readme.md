@@ -207,7 +207,7 @@ class User {
 
 ### Scope Resource for User
 
-If you use our Policy and Seeder, the user will sill be able to see other Entries. In order to only **allow a User to view his own Entries** and no others, you can extens our `Eminiarts\NovaPermissions\Nova\ResourceForUser` Class like this:
+If you use our Policy and Seeder, the user will still be able to see other Entries. In order to only **allow a User to view his own Entries** and no others, you can extens our `Eminiarts\NovaPermissions\Nova\ResourceForUser` Class like this:
 
 ```php
 <?php
