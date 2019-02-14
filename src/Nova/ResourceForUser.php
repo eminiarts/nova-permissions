@@ -31,17 +31,15 @@ abstract class ResourceForUser extends NovaResource
 
         // Super Admin
         if ($user->isSuperAdmin()) {
-            return $query->where('user_id', $user->id);
+            return $query;
         }
 
         // If the User has only Permission to view his own Entries, we scope the query.
         if ($user->hasPermissionTo('view own ' . parent::uriKey())) {
-            return $query
-                ->where('user_id', $user->id)
-                ->where('user_id', $user->id);
+            return $query->where('user_id', $user->id);
         }
 
-        return $query->where('user_id', $user->id);
+        return $query;
     }
 
     /**
