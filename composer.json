@@ -1,0 +1,30 @@
+{
+    "name": "eminiarts/nova-permissions",
+    "description": "Laravel Nova Grouped Permissions.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "spatie/laravel-permission": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eminiarts\\NovaPermissions\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eminiarts\\NovaPermissions\\ToolServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
