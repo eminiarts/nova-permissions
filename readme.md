@@ -8,6 +8,7 @@ A Laravel Nova Tool that allows you to group your Permissions into Groups and at
     * [Database Seeding](#database-seeding)
     * [Create a Model Policy](#create-a-model-policy)
     * [Super Admin](#super-admin)
+    * [Scope Resource for User](#scope-resource-for-user)
 3. [Customization](#customization)
     * [Use your own Resources](#use-your-own-resources)
 4. [Credits](#credits)
@@ -63,8 +64,8 @@ public function fields(Request $request)
 {
     return [
         // ...
-        MorphToMany::make('Roles', 'roles', \Eminiarts\NovaPermissions\Role::class),
-        MorphToMany::make('Permissions', 'permissions', \Eminiarts\NovaPermissions\Permission::class),
+        MorphToMany::make('Roles', 'roles', \Eminiarts\NovaPermissions\Nova\Role::class),
+        MorphToMany::make('Permissions', 'permissions', \Eminiarts\NovaPermissions\Nova\Permission::class),
     ];
 }
 ```
@@ -224,6 +225,22 @@ class User {
 ```
 
 > You can modify this function as you please.
+
+### Scope Resource for User
+
+If you use our Policy and Seeder, the user will sill be able to see other Entries. In order to only **allow a User to view his own Entries** and no others, you can extens our `Eminiarts\NovaPermissions\Nova\ResourceForUser` Class like this:
+
+```php
+<?php
+namespace App\Nova;
+
+use Eminiarts\NovaPermissions\Nova\ResourceForUser;
+
+class Menuplan extends ResourceForUser 
+{
+    //...
+}
+```
 
 ## Customization
 

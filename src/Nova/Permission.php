@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\Select;
-use Eminiarts\NovaPermissions\Role;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\BelongsToMany;
+use Eminiarts\NovaPermissions\Nova\Role;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends Resource
