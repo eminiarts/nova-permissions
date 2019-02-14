@@ -1,5 +1,7 @@
 # Laravel Nova Grouped Permissions
-A Laravel Nova Tool that allows you to group your Permissions into Groups and attach it to Users. It uses Spatie's laravel-permission.
+A Laravel Nova Tool that allows you to group your Permissions into Groups and attach it to Users. It uses Spatie's laravel-permission. 
+
+We have a Migration, Seed, Policy and Resource ready for a good Authorization Experience.
 
 1. [Installation](#Installation)
 2. [Permissions with Groups](#permissions-with-groups)
@@ -29,8 +31,6 @@ Publish the Migration with the following command:
 ```bash
 php artisan vendor:publish --provider="Eminiarts\NovaPermissions\ToolServiceProvider" --tag="migrations"
 ```
-
-This migration has a `group` field in order to allow groups.
 
 Migrate the Database:
 
