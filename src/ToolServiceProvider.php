@@ -25,6 +25,10 @@ class ToolServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $this->publishes([
+            __DIR__ . '/../config/permission.php' => config_path('permission.php'),
+        ], 'config');
+
+        $this->publishes([
             __DIR__ . '/../database/seeds/RolesAndPermissionsSeeder.php.stub' => $this->app->databasePath() . "/seeds/RolesAndPermissionsSeeder.php",
         ], 'seeds');
 
@@ -42,7 +46,10 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/permission.php',
+            'permission'
+        );
     }
 
     /**
