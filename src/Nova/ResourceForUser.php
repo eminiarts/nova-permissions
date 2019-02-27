@@ -15,7 +15,14 @@ abstract class ResourceForUser extends NovaResource
      */
     public static function detailQuery(NovaRequest $request, $query)
     {
-        return parent::detailQuery($request, $query->where('user_id', $request->user()->id));
+        $user = $request->user();
+
+        // Super Admin
+        if ($user->isSuperAdmin()) {
+            return $query;
+        }
+
+        return parent::detailQuery($request, $query->where('user_id', $user->id));
     }
 
     /**
@@ -53,7 +60,14 @@ abstract class ResourceForUser extends NovaResource
      */
     public static function relatableQuery(NovaRequest $request, $query)
     {
-        return parent::relatableQuery($request, $query->where('user_id', $request->user()->id));
+        $user = $request->user();
+
+        // Super Admin
+        if ($user->isSuperAdmin()) {
+            return parent::relatableQuery($request, $query);
+        }
+
+        return parent::relatableQuery($request, $query->where('user_id', $user->id));
     }
 
     /**
@@ -65,6 +79,13 @@ abstract class ResourceForUser extends NovaResource
      */
     public static function scoutQuery(NovaRequest $request, $query)
     {
-        return $query->where('user_id', $request->user()->id);
+        $user = $request->user();
+
+        // Super Admin
+        if ($user->isSuperAdmin()) {
+            return $query;
+        }
+
+        return $query->where('user_id', $user->id);
     }
 }
