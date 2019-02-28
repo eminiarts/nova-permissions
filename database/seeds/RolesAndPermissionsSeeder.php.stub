@@ -19,6 +19,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $collection = collect([
             'users',
             'roles',
+            'permissions',
             // 'teams', 
             // ... // List all your Models you want to have Permissions for.
         ]);
