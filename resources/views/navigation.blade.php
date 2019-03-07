@@ -11,26 +11,31 @@
 
     <ul class="list-reset mb-8">
 
-        <li class="leading-wide mb-4 text-sm">
-            <router-link :to="{
-                name: 'index',
-                params: {
-                    resourceName: 'roles'
-                }
-            }" class="text-white ml-8 no-underline dim">
-                {{ __('Roles') }}
-            </router-link>
-        </li>
+        @can('viewAny', Spatie\Permission\Models\Role::class)
+            <li class="leading-wide mb-4 text-sm">
+                <router-link :to="{
+                    name: 'index',
+                    params: {
+                        resourceName: 'roles'
+                    }
+                }" class="text-white ml-8 no-underline dim">
+                    {{ __('Roles') }}
+                </router-link>
+            </li>
+        @endcan
 
-        <li class="leading-wide mb-4 text-sm">
-            <router-link :to="{
-                name: 'index',
-                params: {
-                    resourceName: 'permissions'
-                }
-            }" class="text-white ml-8 no-underline dim">
-                {{ __('Permissions') }}
-            </router-link>
-        </li>
+        @can('viewAny', Spatie\Permission\Models\Permission::class)
+            <li class="leading-wide mb-4 text-sm">
+                <router-link :to="{
+                    name: 'index',
+                    params: {
+                        resourceName: 'permissions'
+                    }
+                }" class="text-white ml-8 no-underline dim">
+                    {{ __('Permissions') }}
+                </router-link>
+            </li>
+        @endcan
 
     </ul>
+
