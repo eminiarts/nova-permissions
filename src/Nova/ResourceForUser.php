@@ -22,6 +22,11 @@ abstract class ResourceForUser extends NovaResource
             return $query;
         }
 
+        // User Can View all Entries and is not restricted to its own
+        if (!$user->hasPermissionTo('view own ' . parent::uriKey()) && $user->hasPermissionTo('view ' . parent::uriKey())) {
+            return $query;
+        }
+
         return parent::detailQuery($request, $query->where('user_id', $user->id));
     }
 
@@ -67,6 +72,11 @@ abstract class ResourceForUser extends NovaResource
             return parent::relatableQuery($request, $query);
         }
 
+        // User Can View all Entries and is not restricted to its own
+        if (!$user->hasPermissionTo('view own ' . parent::uriKey()) && $user->hasPermissionTo('view ' . parent::uriKey())) {
+            return parent::relatableQuery($request, $query);
+        }
+
         return parent::relatableQuery($request, $query->where('user_id', $user->id));
     }
 
@@ -83,6 +93,11 @@ abstract class ResourceForUser extends NovaResource
 
         // Super Admin
         if ($user->isSuperAdmin()) {
+            return $query;
+        }
+
+        // User Can View all Entries and is not restricted to its own
+        if (!$user->hasPermissionTo('view own ' . parent::uriKey()) && $user->hasPermissionTo('view ' . parent::uriKey())) {
             return $query;
         }
 
