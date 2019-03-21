@@ -51,7 +51,7 @@ public function tools()
 {
     return [
         // ...
-        \Eminiarts\NovaPermissions\NovaPermissions(),
+        new \Eminiarts\NovaPermissions\NovaPermissions(),
     ];
 }
 ```
