@@ -72,6 +72,20 @@ public function fields(Request $request)
 }
 ```
 
+Add  the Spatie\Permission\Traits\HasRoles trait to your User model(s):
+
+```php
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use HasRoles;
+
+    // ...
+}
+```
+
 A new menu item called **Permissions & Roles** will appear in your Nova app after installing this package.
 
 ## Permissions with Groups
