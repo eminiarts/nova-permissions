@@ -113,9 +113,9 @@ This is just an example on how you could seed your Database with Roles and Permi
 ```php
 <?php
 
-use App\Role;
-use App\Permission;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
