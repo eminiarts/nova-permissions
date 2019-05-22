@@ -8,6 +8,13 @@ class Policy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can create models.
      *
@@ -27,10 +34,6 @@ class Policy
      */
     public function delete(User $user, $model)
     {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
         if ($user->hasPermissionTo('manage own ' . static::$key)) {
             return $user->id == $model->user_id;
         }
@@ -46,10 +49,6 @@ class Policy
      */
     public function forceDelete(User $user, $model)
     {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
         if ($user->hasPermissionTo('manage own ' . static::$key) && $user->hasPermissionTo('forceDelete ' . static::$key)) {
             return $user->id == $model->user_id;
         }
@@ -65,10 +64,6 @@ class Policy
      */
     public function restore(User $user, $model)
     {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
         if ($user->hasPermissionTo('manage own ' . static::$key) && $user->hasPermissionTo('restore ' . static::$key)) {
             return $user->id == $model->user_id;
         }
@@ -84,10 +79,6 @@ class Policy
      */
     public function update(User $user, $model)
     {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
         if ($user->hasPermissionTo('manage own ' . static::$key)) {
             return $user->id == $model->user_id;
         }
@@ -103,10 +94,6 @@ class Policy
      */
     public function view(User $user, $model)
     {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
         if ($user->hasPermissionTo('view own ' . static::$key)) {
             return $user->id == $model->user_id;
         }
