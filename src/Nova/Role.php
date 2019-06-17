@@ -108,7 +108,7 @@ class Role extends Resource
             Text::make(__('Users'), function () {
                 return count($this->users);
             })->exceptOnForms(),
-            MorphToMany::make($userResource::label(), 'users', $userResource)->searchable(),
+            MorphToMany::make($userResource::singularLabel(), 'users', $userResource)->searchable(),
         ];
     }
 
