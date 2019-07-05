@@ -56,6 +56,26 @@ public function tools()
 }
 ```
 
+If you want to hide the tool from certain users, you can write your custom logic for the ability to see the tool:
+
+```php
+// in app/Providers/NovaServiceProvider.php
+
+// ...
+
+public function tools()
+{
+    return [
+        // ...
+        (new \Eminiarts\NovaPermissions\NovaPermissions())->canSee(function ($request) {
+            return $request->user()->isSuperAdmin();
+        }),
+    ];
+}
+
+
+```
+
 Finally, add `MorphToMany` fields to you `app/Nova/User` resource:
 
 ```php
