@@ -86,8 +86,8 @@ public function fields(Request $request)
 {
     return [
         // ...
-        MorphToMany::make('Roles', 'roles', \Eminiarts\NovaPermissions\Nova\Role::class),
-        MorphToMany::make('Permissions', 'permissions', \Eminiarts\NovaPermissions\Nova\Permission::class),
+        MorphToMany::make(__('Roles'), 'roles', \Eminiarts\NovaPermissions\Nova\Role::class),
+        MorphToMany::make(__('Permissions'), 'permissions', \Eminiarts\NovaPermissions\Nova\Permission::class),
     ];
 }
 ```
