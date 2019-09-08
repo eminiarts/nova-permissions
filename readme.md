@@ -1,7 +1,3 @@
-# THIS IS A FORK!!!
-This is a fork from the creator `eminiarts/nova-permissions` that we are working on to make Laravel 6 compatible. You should get this package from the offical package creator.
-
-
 # Laravel Nova Grouped Permissions
 [![Latest Version on Github](https://img.shields.io/packagist/v/eminiarts/nova-permissions.svg?style=flat)](https://packagist.org/packages/eminiarts/nova-permissions)
 
