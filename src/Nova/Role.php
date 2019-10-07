@@ -99,9 +99,9 @@ class Role extends Resource
             ,
             Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
                 return [
-                    'group'  => __(ucfirst($permission->group)),
+                    'group'  => is_array(__(ucfirst($permission->group))) ? ucfirst($permission->group) : __(ucfirst($permission->group)),
                     'option' => $permission->name,
-                    'label'  => __($permission->name),
+                    'label'  => is_array(__($permission->name)) ? $permission->name : __($permission->name),
                 ];
             })->groupBy('group')->toArray())
             ,
