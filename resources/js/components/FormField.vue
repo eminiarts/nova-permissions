@@ -11,7 +11,7 @@
               :key="group"
               class="w-1/2 mb-2"
           >
-              <h3 class="my-2">{{ __(group) }}</h3>
+              <h3 class="my-2 capitalize">{{ __( groupName(group) ) }}</h3>
               <div
                   v-for="(permission, option) in permissions"
                   :key="permission.option"
@@ -61,8 +61,9 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from "laravel-nova";
-export default {
+    import {FormField, HandlesValidationErrors} from "laravel-nova";
+
+    export default {
   mixins: [FormField, HandlesValidationErrors],
   props: ["resourceName", "resourceId", "field"],
   methods: {
@@ -123,7 +124,10 @@ export default {
      */
     handleChange(value) {
       this.value = value;
-    }
+    },
+      groupName: (group) => {
+          return group.replace('_', ' ')
+      }
   }
 };
 </script>

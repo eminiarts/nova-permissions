@@ -7,7 +7,7 @@
                     :key="group"
                     class="w-1/2 mb-2"
                 >
-                    <h3 class="my-2">{{ __(group) }}</h3>
+                    <h3 class="my-2 capitalize">{{ groupName(group) }}</h3>
                     <div
                         v-for="(permission, option) in permissions"
                         :key="option"
@@ -48,7 +48,11 @@
                     'bg-danger': this.field.value ? !this.field.value.includes(option) : true,
                 }
             },
-        },
+
+            groupName: (group) => {
+                return group.replace('_', ' ')
+            }
+        }
     }
 </script>
 
