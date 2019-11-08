@@ -118,7 +118,7 @@ class Policy
             return $user->id == $model->user_id;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -126,6 +126,6 @@ class Policy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view ' . static::$key);
+        return $user->hasAnyPermission(['view ' . static::$key, 'view own ' . static::$key]);
     }
 }
