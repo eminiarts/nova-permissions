@@ -6,26 +6,56 @@
         <span class="ml-auto btn btn-danger btn-default" @click="uncheckAll()">{{ __('Do not select any') }}</span>
       </div>
       <div class="flex flex-wrap" v-if="field.withGroups">
-          <div v-for="(permissions, group) in field.options" :key="group" class="w-1/2 mb-2">
+          <div
+              v-for="(permissions, group) in field.options"
+              :key="group"
+              class="w-1/2 mb-2"
+          >
               <h3 class="my-2">{{ __(group) }}</h3>
-              <div v-for="(permission, option) in permissions" :key="permission.option" class="mb-2">
-                  <checkbox :value="permission.option" :checked="isChecked(permission.option)" @input="toggleOption(permission.option)" class="pr-2"></checkbox>
-                  <label :for="field.name" v-text="permission.label" @click="toggleOption(permission.option)" class="ml-2"></label>
+              <div
+                  v-for="(permission, option) in permissions"
+                  :key="permission.option"
+                  class="mb-2"
+              >
+                  <checkbox
+                      :value="permission.option"
+                      :checked="isChecked(permission.option)"
+                      @input="toggleOption(permission.option)"
+                      class="pr-2"
+                  ></checkbox>
+                  <label
+                      :for="field.name"
+                      v-text="permission.label"
+                      @click="toggleOption(permission.option)"
+                      class="ml-2"
+                  ></label>
               </div>
           </div>
       </div>
       <div class="flex flex-wrap" v-else>
-        <div v-for="(label, option) in field.options" :key="option" class="w-1/2 mb-2">
+        <div
+            v-for="(label, option) in field.options"
+            :key="option"
+            class="w-1/2 mb-2"
+        >
           <checkbox
             :value="option"
             :checked="isChecked(option)"
             @input="toggleOption(option)"
             class="pr-2"
           />
-          <label :for="field.name" v-text="label" @click="toggleOption(option)" class="ml-2"></label>
+          <label
+              :for="field.name"
+              v-text="label"
+              @click="toggleOption(option)"
+              class="ml-2"
+          ></label>
         </div>
       </div>
-      <p v-if="hasError" class="my-2 text-danger">{{ firstError }}</p>
+      <p
+          v-if="hasError"
+          class="my-2 text-danger"
+      >{{ firstError }}</p>
     </template>
   </default-field>
 </template>

@@ -2,12 +2,20 @@
     <panel-item :field="field">
         <p slot="value" class="text-90 flex">
             <span class="flex flex-wrap" v-if="field.withGroups">
-                <div v-for="(permissions, group) in field.options" :key="group" class="w-1/2 mb-2">
+                <div
+                    v-for="(permissions, group) in field.options"
+                    :key="group"
+                    class="w-1/2 mb-2"
+                >
                     <h3 class="my-2">{{ __(group) }}</h3>
-                    <div v-for="(permission, option) in permissions" :key="option" class="flex-auto">
+                    <div
+                        v-for="(permission, option) in permissions"
+                        :key="option"
+                        class="flex-auto"
+                    >
                         <span
-                        class="inline-block rounded-full w-2 h-2 mr-1"
-                        :class="optionClass(permission.option)"
+                            class="inline-block rounded-full w-2 h-2 mr-1"
+                            :class="optionClass(permission.option)"
                         />
                         <span>{{ permission.label }}</span>
                     </div>
@@ -20,8 +28,8 @@
                 class="w-1/2 mb-2"
                 >
                 <span
-                class="inline-block rounded-full w-2 h-2 mr-1"
-                :class="optionClass(option)"
+                    class="inline-block rounded-full w-2 h-2 mr-1"
+                    :class="optionClass(option)"
                 />
                 <span>{{ label }}</span>
             </div>
