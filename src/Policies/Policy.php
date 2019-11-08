@@ -118,7 +118,7 @@ class Policy
             return $user->id == $model->user_id;
         }
 
-        return true;
+        return false;
     }
 
     /**
