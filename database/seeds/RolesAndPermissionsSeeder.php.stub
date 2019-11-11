@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -17,29 +18,43 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $collection = collect([
-            'users',
-            'roles',
-            'permissions',
+            \App\User::class,
+            \Spatie\Permission\Models\Role::class,
+            \Spatie\Permission\Models\Permission::class,
             // 'teams',
             // ... // List all your Models you want to have Permissions for.
         ]);
 
         $collection->each(function ($item, $key) {
             // create permissions for each collection item
-            Permission::create(['group' => $item, 'name' => 'view ' . str_replace('_', ' ', $item)]);
-            Permission::create(['group' => $item, 'name' => 'view own ' . str_replace('_', ' ', $item)]);
-            Permission::create(['group' => $item, 'name' => 'manage ' . str_replace('_', ' ', $item)]);
-            Permission::create(['group' => $item, 'name' => 'manage own ' . str_replace('_', ' ', $item)]);
-            Permission::create(['group' => $item, 'name' => 'restore ' . str_replace('_', ' ', $item)]);
-            Permission::create(['group' => $item, 'name' => 'forceDelete ' . str_replace('_', ' ', $item)]);
+            $group_name = $this->groupName($item);
+            $permission_name = $this->permissionName($item);
+            Permission::create(['group' => $group_name, 'name' => 'view own ' . $permission_name]);
+            Permission::create(['group' => $group_name, 'name' => 'view ' . $permission_name]);
+            Permission::create(['group' => $group_name, 'name' => 'manage own ' . $permission_name]);
+            Permission::create(['group' => $group_name, 'name' => 'manage ' . $permission_name]);
+            Permission::create(['group' => $group_name, 'name' => 'restore ' . $permission_name]);
+            Permission::create(['group' => $group_name, 'name' => 'forceDelete ' . $permission_name]);
         });
 
         // Create a Super-Admin Role and assign all Permissions
-        $role = Role::create(['name' => 'super-admin']);
+//        $role = Role::create(['name' => 'administrator']);
+//        $role->givePermissionTo(Permission::all());
+        $role = Role::findByName('administrator');
         $role->givePermissionTo(Permission::all());
 
         // Give User Super-Admin Role
-        // $user = App\User::whereEmail('your@email.com')->first(); // Change this to your email.
-        // $user->assignRole('super-admin');
+         $user = App\User::whereEmail('anditsung@gmail.com')->first(); // Change this to your email.
+         $user->assignRole('administrator');
+    }
+
+    private function groupName($item)
+    {
+        return Str::plural(Str::title(Str::snake(class_basename($item), ' ')));
+    }
+
+    private function permissionName($item)
+    {
+        return Str::plural(Str::snake(class_basename($item), ' '));
     }
 }
