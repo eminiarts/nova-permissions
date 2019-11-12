@@ -55,6 +55,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
     private function permissionName($item)
     {
-        return Str::plural(Str::snake(class_basename($item), ' '));
+        return Str::plural(Str::kebab(class_basename($item)));
     }
 }
