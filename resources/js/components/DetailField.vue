@@ -7,7 +7,7 @@
                     :key="group"
                     class="w-1/2 mb-2"
                 >
-                    <h3 class="my-2 capitalize">{{ groupName(group) }}</h3>
+                    <h3 class="my-2 capitalize">{{ fixNaming(group) }}</h3>
                     <div
                         v-for="(permission, option) in permissions"
                         :key="option"
@@ -17,7 +17,7 @@
                             class="inline-block rounded-full w-2 h-2 mr-1"
                             :class="optionClass(permission.option)"
                         />
-                        <span>{{ permission.label }}</span>
+                        <span>{{ fixNaming(permission.label) }}</span>
                     </div>
                 </div>
             </span>
@@ -51,6 +51,17 @@
 
             groupName: (group) => {
                 return group.replace('_', ' ')
+            },
+
+            fixNaming: (name) => {
+                if(name.includes("_")) {
+                    name.replace('_', ' ')
+                }
+
+                if(name.includes("-")) {
+                    name.replace('-', ' ')
+                }
+                return name
             }
         }
     }

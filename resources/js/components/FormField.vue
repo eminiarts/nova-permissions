@@ -11,7 +11,7 @@
               :key="group"
               class="w-1/2 mb-2"
           >
-              <h3 class="my-2 capitalize">{{ __( groupName(group) ) }}</h3>
+              <h3 class="my-2 capitalize">{{ __( fixNaming(group) ) }}</h3>
               <div
                   v-for="(permission, option) in permissions"
                   :key="permission.option"
@@ -25,7 +25,7 @@
                   ></checkbox>
                   <label
                       :for="field.name"
-                      v-text="permission.label"
+                      v-text="fixNaming(permission.label)"
                       @click="toggleOption(permission.option)"
                       class="ml-2"
                   ></label>
@@ -127,6 +127,16 @@
     },
       groupName: (group) => {
           return group.replace('_', ' ')
+      },
+      fixNaming: (name) => {
+        if(name.includes("_")) {
+            name.replace('_', ' ')
+        }
+
+        if(name.includes("-")) {
+            name.replace('-', ' ')
+        }
+        return name
       }
   }
 };
