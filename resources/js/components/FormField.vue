@@ -130,11 +130,11 @@
       },
       fixNaming: (name) => {
           if(name.includes("_") === true) {
-              name.replace('_', ' ')
+              name = name.replace('_', ' ')
           }
 
           if(name.includes("-") === true) {
-              name.replace('-', ' ')
+              name = name.replace('-', ' ')
           }
           return name
       }
