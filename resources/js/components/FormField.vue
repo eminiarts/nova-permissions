@@ -129,14 +129,14 @@
           return group.replace('_', ' ')
       },
       fixNaming: (name) => {
-        if(name.includes("_")) {
-            name.replace('_', ' ')
-        }
+          if(name.includes("_") === true) {
+              name.replace('_', ' ')
+          }
 
-        if(name.includes("-")) {
-            name.replace('-', ' ')
-        }
-        return name
+          if(name.includes("-") === true) {
+              name.replace('-', ' ')
+          }
+          return name
       }
   }
 };

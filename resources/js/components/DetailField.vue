@@ -54,11 +54,11 @@
             },
 
             fixNaming: (name) => {
-                if(name.includes("_")) {
+                if(name.includes("_") === true) {
                     name.replace('_', ' ')
                 }
 
-                if(name.includes("-")) {
+                if(name.includes("-") === true) {
                     name.replace('-', ' ')
                 }
                 return name
