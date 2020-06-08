@@ -106,7 +106,7 @@ class Role extends Resource
             })->groupBy('group')->toArray())
             ,
             Text::make(__('Users'), function () {
-                return count($this->users);
+                return $this->users()->count();
             })->exceptOnForms(),
             MorphToMany::make($userResource::label(), 'users', $userResource)->searchable(),
         ];
