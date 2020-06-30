@@ -17,7 +17,7 @@
               :value="permission.option"
               :checked="isChecked(permission.option)"
               @input="toggleOption(permission.option)"
-              class="pr-2"
+              class="mr-2"
             />
             <label
               :for="field.name"
