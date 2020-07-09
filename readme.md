@@ -275,7 +275,7 @@ public function tools()
 {
     return [
         // ...
-        \Eminiarts\NovaPermissions\NovaPermissionTool::make()
+        \Eminiarts\NovaPermissions\NovaPermissions::make()
             ->roleResource(Role::class)
             ->permissionResource(Permission::class),
     ];
