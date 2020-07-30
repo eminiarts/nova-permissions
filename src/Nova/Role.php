@@ -11,7 +11,6 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\MorphToMany;
 use Eminiarts\NovaPermissions\Checkboxes;
 use Eminiarts\NovaPermissions\Role as RoleModel;
-use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Role extends Resource
 {
@@ -77,6 +76,7 @@ class Role extends Resource
             return [$key => $key];
         });
 
+        $permissionClass = config('permission.models.permission');
         $userResource = Nova::resourceForModel(getModelForGuard($this->guard_name));
 
         return [
@@ -97,13 +97,16 @@ class Role extends Resource
                     return $request->user()->isSuperAdmin();
                 })
             ,
-            Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
-                return [
-                    'group'  => __(ucfirst($permission->group)),
-                    'option' => $permission->name,
-                    'label'  => __($permission->name),
-                ];
-            })->groupBy('group')->toArray())
+            Checkboxes::make(__('Permissions'), 'prepared_permissions')
+                ->withGroups()
+                ->options($permissionClass::all()->map(function ($permission, $key) {
+                    return [
+                        'group'  => __(ucfirst($permission->group)),
+                        'option' => $permission->name,
+                        'label'  => __($permission->name),
+                    ];
+                })
+                ->groupBy('group')->toArray())
             ,
             Text::make(__('Users'), function () {
                 return count($this->users);
