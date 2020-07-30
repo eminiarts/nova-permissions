@@ -106,8 +106,9 @@ class Role extends Resource
                         'label'  => __($permission->name),
                     ];
                 })
-                ->groupBy('group')->toArray())
-            ,
+                ->groupBy('group')
+                ->toArray()),
+
             Text::make(__('Users'), function () {
                 return count($this->users);
             })->exceptOnForms(),
