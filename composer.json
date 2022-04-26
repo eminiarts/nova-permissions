@@ -1,30 +1,30 @@
 {
-    "name": "eminiarts/nova-permissions",
-    "description": "Laravel Nova Grouped Permissions.",
-    "keywords": [
-        "laravel",
-        "nova"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": ">=7.2.0",
-        "spatie/laravel-permission": "3.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Eminiarts\\NovaPermissions\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Eminiarts\\NovaPermissions\\ToolServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "eminiarts/nova-permissions",
+  "description": "Laravel Nova Grouped Permissions.",
+  "keywords": [
+    "laravel",
+    "nova"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^7.3|^8.0|^8.1",
+    "spatie/laravel-permission": "^5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Eminiarts\\NovaPermissions\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Eminiarts\\NovaPermissions\\ToolServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
