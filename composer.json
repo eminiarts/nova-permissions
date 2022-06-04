@@ -7,8 +7,8 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.2.0",
-        "spatie/laravel-permission": "3.*"
+        "php": "^8.0",
+        "spatie/laravel-permission": "^5.5"
     },
     "autoload": {
         "psr-4": {
