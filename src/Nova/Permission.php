@@ -1,16 +1,16 @@
 <?php
+
 namespace Eminiarts\NovaPermissions\Nova;
 
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
-use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Illuminate\Validation\Rule;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\BelongsToMany;
-use Eminiarts\NovaPermissions\Nova\Role;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends Resource
@@ -43,10 +43,20 @@ class Permission extends Resource
      */
     public static $title = 'name';
 
+    public static function getModel()
+    {
+        //return app(PermissionRegistrar::class)->getPermissionClass();
+    }
+
+    public static function singularLabel()
+    {
+        return __('Permission');
+    }
+
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function actions(Request $request)
@@ -58,7 +68,7 @@ class Permission extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -69,7 +79,7 @@ class Permission extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -104,10 +114,15 @@ class Permission extends Resource
         ];
     }
 
+    public static function label()
+    {
+        return __('Permissions');
+    }
+
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -115,29 +130,14 @@ class Permission extends Resource
         return [];
     }
 
-    public static function getModel()
-    {
-        //return app(PermissionRegistrar::class)->getPermissionClass();
-    }
-
-    public static function label()
-    {
-        return __('Permissions');
-    }
-
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function lenses(Request $request)
     {
         return [];
-    }
-
-    public static function singularLabel()
-    {
-        return __('Permission');
     }
 }

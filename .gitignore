@@ -10,3 +10,4 @@ phpunit.xml
 Thumbs.db
 auth.json
 .env
+yarn.lock

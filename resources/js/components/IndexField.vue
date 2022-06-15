@@ -3,7 +3,8 @@
         <div v-for="(permissions, group) in field.options"
              :key="group" class="permissions-flex permissions-border">
 
-            <h3 class="permissions-capitalize permissions-mr-1 permissions-text-xs permissions-w-1/12 permissions-mt-1.5 permissions-pl-1">{{ __(group) }}</h3>
+            <h3 class="permissions-capitalize permissions-mr-1 permissions-text-xs permissions-w-1/12 permissions-mt-1.5 permissions-pl-1">
+                {{ __(group) }}</h3>
             <div
                 v-for="permission in permissions"
                 :key="permission.option"
