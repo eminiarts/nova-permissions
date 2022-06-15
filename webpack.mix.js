@@ -1,5 +1,26 @@
 let mix = require('laravel-mix')
+let tailwindcss = require('tailwindcss')
+let path = require('path')
+let postcssImport = require('postcss-import')
 
-mix.setPublicPath('dist')
-   .js('resources/js/tool.js', 'js')
-   .sass('resources/sass/tool.scss', 'css')
+require('./nova.mix.js')
+
+mix
+    .setPublicPath('dist')
+    .js('resources/js/field.js', 'js')
+    .vue({ version: 3 })
+    .postCss('resources/css/field.css', 'dist/css/', [postcssImport(), tailwindcss('tailwind.config.js'),])
+    .nova('eminiarts/nova-permissions')
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.svg$/,
+                use: [
+                    'babel-loader'
+                ],
+            },
+        ],
+    },
+};

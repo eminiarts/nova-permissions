@@ -2,19 +2,32 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "mix --production"
     },
     "devDependencies": {
-        "cross-env": "^5.0.0",
-        "laravel-mix": "^1.0"
+        "postcss": "^8.4.5",
+        "postcss-import": "^14.0.2",
+        "@inertiajs/inertia": "^0.11.0",
+        "@vue/babel-plugin-jsx": "^1.1.1",
+        "axios": "^0.26.1",
+        "cross-env": "^7.0.3",
+        "form-backend-validation": "^2.4.0",
+        "laravel-mix": "^6.0.43",
+        "prettier": "^2.6.2",
+        "resolve-url-loader": "^5.0.0",
+        "terser-webpack-plugin": "^5.3.1",
+        "vue-loader": "^17.0.0",
+        "vue-template-compiler": "^2.6.14",
+        "vuex": "^4.0.2",
+        "tailwindcss": "^0.0.0-insiders.4a74543",
+        "uid": "^2.0.0"
     },
     "dependencies": {
-        "laravel-nova": "^1.0.9",
-        "vue": "^2.5.0"
+        "vue": "^3"
     }
 }

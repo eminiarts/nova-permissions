@@ -1,13 +1,14 @@
 <?php
+
 namespace Eminiarts\NovaPermissions;
 
-use Laravel\Nova\Nova;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Events\ServingNova;
+use Eminiarts\NovaPermissions\Http\Middleware\Authorize;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Eminiarts\NovaPermissions\Http\Middleware\Authorize;
+use Laravel\Nova\Events\ServingNova;
+use Laravel\Nova\Nova;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -18,8 +19,6 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function boot(Filesystem $filesystem)
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-permissions');
-
         $this->publishes([
             __DIR__ . '/../database/migrations/create_permission_tables.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
@@ -29,33 +28,18 @@ class ToolServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__ . '/../database/seeds/RolesAndPermissionsSeeder.php.stub' => $this->app->databasePath() . "/seeds/RolesAndPermissionsSeeder.php",
+            __DIR__ . '/../database/seeds/RolesAndPermissionsSeeder.php.stub' => $this->app->databasePath() . "/seeders/RolesAndPermissionsSeeder.php",
         ], 'seeds');
 
         $this->app->booted(function () {
             $this->routes();
         });
-
-        Nova::serving(function (ServingNova $event) {});
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/permission.php',
-            'permission'
-        );
     }
 
     /**
      * Returns existing migration file if found, else uses the current timestamp.
      *
-     * @param  Filesystem $filesystem
+     * @param Filesystem $filesystem
      * @return string
      */
     protected function getMigrationFileName(Filesystem $filesystem): string
@@ -83,5 +67,18 @@ class ToolServiceProvider extends ServiceProvider
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/nova-permissions')
             ->group(__DIR__ . '/../routes/api.php');
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/permission.php',
+            'permission'
+        );
     }
 }

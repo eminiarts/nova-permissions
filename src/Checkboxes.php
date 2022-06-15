@@ -1,4 +1,5 @@
 <?php
+
 namespace Eminiarts\NovaPermissions;
 
 use Laravel\Nova\Fields\Field;
@@ -11,12 +12,12 @@ class Checkboxes extends Field
      *
      * @var string
      */
-    public $component = 'FieldCheckboxes';
+    public $component = 'permissions';
 
     /**
      * Specify the available options
      *
-     * @param  array  $options
+     * @param array $options
      * @return self
      */
     public function options(array $options)
@@ -35,10 +36,10 @@ class Checkboxes extends Field
     /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
-     * @param  string                                  $requestAttribute
-     * @param  object                                  $model
-     * @param  string                                  $attribute
+     * @param NovaRequest $request
+     * @param string $requestAttribute
+     * @param object $model
+     * @param string $attribute
      * @return void
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)

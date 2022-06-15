@@ -1,16 +1,18 @@
 <?php
+
 namespace Eminiarts\NovaPermissions\Nova;
 
-use Laravel\Nova\Nova;
-use Laravel\Nova\Resource;
-use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Illuminate\Validation\Rule;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\MorphToMany;
 use Eminiarts\NovaPermissions\Checkboxes;
 use Eminiarts\NovaPermissions\Role as RoleModel;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Nova;
+use Laravel\Nova\Resource;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Role extends Resource
@@ -43,32 +45,15 @@ class Role extends Resource
      */
     public static $title = 'name';
 
-    /**
-     * Get the actions available for the resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return array
-     */
-    public function actions(Request $request)
+    public static function singularLabel()
     {
-        return [];
-    }
-
-    /**
-     * Get the cards available for the request.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return array
-     */
-    public function cards(Request $request)
-    {
-        return [];
+        return __('Role');
     }
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -97,50 +82,24 @@ class Role extends Resource
                     return $request->user()->isSuperAdmin();
                 })
             ,
-            Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
-                return [
-                    'group'  => __(ucfirst($permission->group)),
-                    'option' => $permission->name,
-                    'label'  => __($permission->name),
-                ];
-            })->groupBy('group')->toArray())
-            ,
             Text::make(__('Users'), function () {
                 return count($this->users);
             })->exceptOnForms(),
+            Heading::make('Permissions'),
+            Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
+                return [
+                    'group' => __(ucfirst($permission->group)),
+                    'option' => $permission->name,
+                    'label' => __($permission->name),
+                ];
+            })->groupBy('group')->toArray())
+            ,
             MorphToMany::make($userResource::label(), 'users', $userResource)->searchable(),
         ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return array
-     */
-    public function filters(Request $request)
-    {
-        return [];
     }
 
     public static function label()
     {
         return __('Roles');
-    }
-
-    /**
-     * Get the lenses available for the resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return array
-     */
-    public function lenses(Request $request)
-    {
-        return [];
-    }
-
-    public static function singularLabel()
-    {
-        return __('Role');
     }
 }
