@@ -2,12 +2,14 @@
 namespace Eminiarts\NovaPermissions\Nova;
 
 use Laravel\Nova\Nova;
+use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\MorphToMany;
 use Eminiarts\NovaPermissions\Checkboxes;
 use Eminiarts\NovaPermissions\Role as RoleModel;
@@ -97,6 +99,10 @@ class Role extends Resource
                     return $request->user()->isSuperAdmin();
                 })
             ,
+            Text::make(__('Users'), function () {
+                return count($this->users);
+            })->exceptOnForms(),
+            Heading::make('Permissions'),
             Checkboxes::make(__('Permissions'), 'prepared_permissions')->withGroups()->options(SpatiePermission::all()->map(function ($permission, $key) {
                 return [
                     'group'  => __(ucfirst($permission->group)),
@@ -105,9 +111,6 @@ class Role extends Resource
                 ];
             })->groupBy('group')->toArray())
             ,
-            Text::make(__('Users'), function () {
-                return count($this->users);
-            })->exceptOnForms(),
             MorphToMany::make($userResource::label(), 'users', $userResource)->searchable(),
         ];
     }

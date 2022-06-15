@@ -11,7 +11,7 @@ class Checkboxes extends Field
      *
      * @var string
      */
-    public $component = 'FieldCheckboxes';
+    public $component = 'permissions';
 
     /**
      * Specify the available options

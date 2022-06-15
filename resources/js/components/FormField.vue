@@ -1,53 +1,49 @@
 <template>
-  <default-field :field="field" :full-width-content="true">
-    <template slot="field">
-      <div class="w-full mb-4">
-        <span class="ml-auto btn btn-default mr-3" @click="checkAll()">{{ __('Select all')}}</span>
-        <span class="ml-auto btn btn-default" @click="uncheckAll()">{{ __('Do not select any') }}</span>
+    <div class="permissions-w-full md:permissions-py-3 permissions-px-7 text-sm">
+      <div class="permissions-w-full permissions-mb-4 space-x-2">
+        <span class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900" @click="checkAll()">{{ __('Select all')}}</span>
+        <span class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900" @click="uncheckAll()">{{ __('Do not select any') }}</span>
       </div>
-      <div class="w-full max-col-2" v-if="field.withGroups">
+      <div class="permissions-w-full permissions-grid 2xl:permissions-grid-cols-5 xl:permissions-grid-cols-4 lg:permissions-grid-cols-3 permissions-grid-cols-2 md:permissions-py-3 permissions-px-1" v-if="field.withGroups">
         <div v-for="(permissions, group) in field.options" :key="group" class="mb-4">
-          <h3 class="my-2">{{ __(group) }}</h3>
+            <h3 class="permissions-font-bold permissions-capitalize permissions-mb-1 text-sm">{{ __(group) }}</h3>
           <div
             v-for="(permission, option) in permissions"
             :key="permission.option"
-            class="flex mb-2"
+            class="permissions-flex-auto permissions-py-0.5"
           >
             <checkbox
               :value="permission.option"
               :checked="isChecked(permission.option)"
               @input="toggleOption(permission.option)"
-              class="pr-2"
             />
             <label
               :for="field.name"
               v-text="permission.label"
               @click="toggleOption(permission.option)"
-              class="w-full"
+              class="permissions-pl-2 permissions-w-full permissions-capitalize"
             ></label>
           </div>
         </div>
       </div>
-      <div class="w-full max-col-2" v-else>
+      <div class="permissions-w-full permissions-grid 2xl:permissions-grid-cols-5 xl:permissions-grid-cols-4 lg:permissions-grid-cols-3 permissions-grid-cols-2 md:permissions-py-3 permissions-px-1" v-else>
         <div v-for="(label, option) in field.options" :key="option" class="flex mb-2">
           <checkbox
             :value="option"
             :checked="isChecked(option)"
             @input="toggleOption(option)"
-            class="pr-2"
           />
-          <label :for="field.name" v-text="label" @click="toggleOption(option)" class="w-full"></label>
+          <label :for="field.name" v-text="label" @click="toggleOption(option)" class="permissions-pl-2 permissions-w-full permissions-capitalize"></label>
         </div>
       </div>
-      <p v-if="hasError" class="my-2 text-danger">{{ firstError }}</p>
-    </template>
-  </default-field>
+      <p v-if="hasError" class="permissions-my-2 permissions-text-red-500">{{ firstError }}</p>
+    </div>
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from "laravel-nova";
+import { DependentFormField, HandlesValidationErrors } from 'laravel-nova'
 export default {
-  mixins: [FormField, HandlesValidationErrors],
+  mixins: [DependentFormField, HandlesValidationErrors],
   props: ["resourceName", "resourceId", "field"],
   methods: {
     checkAll() {
@@ -80,7 +76,7 @@ export default {
     },
     uncheck(option) {
       if (this.isChecked(option)) {
-        this.$set(this, "value", this.value.filter(item => item != option));
+        this.value = this.value.filter(item => item != option);
       }
     },
     toggleOption(option) {

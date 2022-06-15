@@ -18,8 +18,6 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function boot(Filesystem $filesystem)
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-permissions');
-
         $this->publishes([
             __DIR__ . '/../database/migrations/create_permission_tables.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
@@ -29,7 +27,7 @@ class ToolServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__ . '/../database/seeds/RolesAndPermissionsSeeder.php.stub' => $this->app->databasePath() . "/seeds/RolesAndPermissionsSeeder.php",
+            __DIR__ . '/../database/seeds/RolesAndPermissionsSeeder.php.stub' => $this->app->databasePath() . "/seeders/RolesAndPermissionsSeeder.php",
         ], 'seeds');
 
         $this->app->booted(function () {

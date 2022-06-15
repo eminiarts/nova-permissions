@@ -1,6 +1,9 @@
 <?php
 namespace Eminiarts\NovaPermissions;
 
+use Illuminate\Http\Request;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 use Eminiarts\NovaPermissions\Nova\Role;
@@ -25,8 +28,8 @@ class NovaPermissions extends Tool
      */
     public function boot()
     {
-        Nova::script('NovaPermissions', __DIR__ . '/../dist/js/tool.js');
-        Nova::style('NovaPermissions', __DIR__ . '/../dist/css/tool.css');
+        Nova::script('permissions', __DIR__.'/../dist/js/field.js');
+        Nova::style('permissions', __DIR__.'/../dist/css/field.css');
 
         Nova::resources([
             $this->roleResource,
@@ -74,5 +77,13 @@ class NovaPermissions extends Tool
         $this->roleResource = $roleResource;
 
         return $this;
+    }
+
+    public function menu(Request $request)
+    {
+        return MenuSection::make('Security', [
+            MenuItem::resource(Role::class),
+            MenuItem::resource(Permission::class),
+        ])->icon('shield');
     }
 }

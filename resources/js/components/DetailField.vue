@@ -1,60 +1,35 @@
 <template>
-    <panel-item :field="field">
-        <p slot="value" class="text-90 flex">
-            <span class="w-full max-col-2" v-if="field.withGroups">
-                <div v-for="(permissions, group) in field.options" :key="group" class="mb-4">
-                    <h3 class="my-2">{{ __(group) }}</h3>
-                    <div v-for="(permission, option) in permissions" :key="option" class="flex-auto">
+    <div class="permissions-w-full permissions-grid 2xl:permissions-grid-cols-5 xl:permissions-grid-cols-4 lg:permissions-grid-cols-3 permissions-grid-cols-2 md:permissions-py-3 permissions-px-3 text-sm">
+        <template v-if="field.withGroups">
+            <div v-for="(permissions, group) in field.options" :key="group" class="permissions-mb-4 permissions-flex-auto">
+                <h3 class="permissions-font-bold permissions-capitalize text-sm">{{ __(group) }}</h3>
+                <div v-for="(permission, option) in permissions" :key="option" class="permissions-flex-auto permissions-py-0.5">
                         <span
-                        class="inline-block rounded-full w-2 h-2 mr-1"
-                        :class="optionClass(permission.option)"
+                            :class="field.value.includes(permission.option) ? 'permissions-bg-green-400' : 'permissions-bg-red-500'"
+                            class="permissions-inline-block permissions-rounded-full permissions-w-2 permissions-h-2 permissions-mr-2"
                         />
-                        <span>{{ permission.label }}</span>
-                    </div>
+                    <span class="permissions-capitalize">{{ permission.label }}</span>
                 </div>
-            </span>
-            <span class="w-full max-col-2" v-else>
-                <div
+            </div>
+        </template>
+        <template v-else >
+            <div
                 v-for="(label, option) in field.options"
                 :key="option"
-                class="flex-auto"
-                >
-                <span
-                class="inline-block rounded-full w-2 h-2 mr-1"
-                :class="optionClass(option)"
-                />
+                class="permissions-flex-auto"
+            >
+                    <span
+                        :class="field.value.includes(option) ? 'permissions-bg-green-400' : 'permissions-bg-red-500'"
+                        class="permissions-inline-block permissions-rounded-full permissions-w-2 permissions-h-2 permissions-mr-1"
+                    />
                 <span>{{ label }}</span>
             </div>
-        </span>
-    </p>
-</panel-item>
+        </template>
+    </div>
 </template>
 
 <script>
-    export default {
-        props: ['resource', 'resourceName', 'resourceId', 'field'],
-        methods: {
-            optionClass(option) {
-                return {
-                    'bg-success': this.field.value ? this.field.value.includes(option) : false,
-                    'bg-danger': this.field.value ? !this.field.value.includes(option) : true,
-                }
-            },
-        },
-    }
+export default {
+    props: ['resource', 'resourceName', 'resourceId', 'field'],
+}
 </script>
-
-<style>
-.max-col-3 {
-    -moz-column-count: 3;
-    -webkit-column-count: 3;
-    column-count: 3;
-    white-space: nowrap;
-}
-.max-col-2 {
-    -moz-column-count: 2;
-    -webkit-column-count: 2;
-    column-count: 2;
-    white-space: nowrap;
-}
-</style>
