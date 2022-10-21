@@ -78,7 +78,7 @@ class Permission extends Resource
             return [$key => $key];
         });
 
-        $userResource = Nova::resourceForModel(getModelForGuard($this->guard_name));
+        $userResource = Nova::resourceForModel(getModelForGuard($this->guard_name ?? 'web'));
 
         return [
             ID::make('Id', 'id')
